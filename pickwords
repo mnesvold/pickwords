@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+
+from random import choice
+from re import compile
+
+DICT_FILE = '/usr/share/dict/american-english'
+WORD_COUNT = 100
+WORD_PATTERN = compile(r'^[a-z]+$')
+
+def is_acceptable(word):
+    return (WORD_PATTERN.match(word) is not None)
+
+with open(DICT_FILE, 'r') as f:
+    lines = iter(f)
+    stripped_lines = (line.strip() for line in lines)
+    words = (line for line in stripped_lines if is_acceptable(line))
+    dictionary = tuple(words)
+
+choices = tuple(choice(dictionary) for i in range(WORD_COUNT))
+print(' '.join(choices))
