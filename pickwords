@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+from argparse import ArgumentParser
 from random import choice
 from re import compile
 
 DICT_FILE = '/usr/share/dict/american-english'
-WORD_COUNT = 100
+DEFAULT_WORD_COUNT = 100
 WORD_PATTERN = compile(r'^[a-z]+$')
 
 def is_acceptable(word):
@@ -16,5 +17,16 @@ with open(DICT_FILE, 'r') as f:
     words = (line for line in stripped_lines if is_acceptable(line))
     dictionary = tuple(words)
 
-choices = tuple(choice(dictionary) for i in range(WORD_COUNT))
-print(' '.join(choices))
+def parse_options():
+    parser = ArgumentParser(description='Pick words from a word list.')
+    parser.add_argument('-n', type=int, metavar='N',
+        default=DEFAULT_WORD_COUNT,
+        dest='word_count',
+        help='choose and print N words')
+    args = parser.parse_args()
+    return args
+
+if __name__ == '__main__':
+    opts = parse_options()
+    choices = tuple(choice(dictionary) for i in range(opts.word_count))
+    print(' '.join(choices))

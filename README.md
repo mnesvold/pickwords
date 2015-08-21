@@ -6,4 +6,4 @@ The script expects a file at `/usr/share/dict/american-english` with one word pe
 ## To do
 
 * [ ] Add option to specify dictionary file
-* [ ] Add option to specify word count
+* [x] Add option to specify word count (use `-n 100`)
